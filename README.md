@@ -5,7 +5,7 @@ Web Page: https://luccatsantos.github.io/labreports/
 
 Lab 1: https://luccatsantos.github.io/labreports/Lab1.html
 
-Intro to Turtle Graphics: https://luccatsantos.github.io/labreports/Module1-IntroToTurtleGraphics.html
+Intro to Turtle Graphics: https://luccatsantos.github.io/labreports/IntroToTurtleGraphics.html
 
 # Notes
 
