@@ -3,9 +3,9 @@ Reports for Fractal Geometry
 
 Web Page: https://luccatsantos.github.io/labreports/
 
-Lab 1: https://luccatsantos.github.io/labreports/Lab1.html
+Lab 0: https://luccatsantos.github.io/labreports/Lab0.html
 
-Intro to Turtle Graphics: https://luccatsantos.github.io/labreports/IntroToTurtleGraphics.html
+Lab 1: Intro to Turtle Graphics: https://luccatsantos.github.io/labreports/Lab1-IntroToTurtleGraphics.html
 
 # Notes
 
