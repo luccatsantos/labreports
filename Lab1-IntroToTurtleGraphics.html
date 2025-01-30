@@ -68,15 +68,33 @@
 	# This is just a sample Python code block
 	# demonstrating how code might be displayed.
 
-	import numpy as np
-	import matplotlib.pyplot as plt
+	# Initialize the turtle
+	initializeTurtle()
+	showturtle()
+	color('white')
+	bgcolor('red')
 
-	x = np.linspace(-10, 10, 100)
-	y = 2*x + 5
+	# Move to a suitable starting position
+	jump(500, 300)  # Adjust these values as needed to center the square
+	face(15)  # Ensure the turtle is facing up
 
-	plt.plot(x, y)
-	plt.title("Sample Plot")
-	plt.show()
+	#Drawing a Malta Cross
+	d=100
+	jump(700, 300)
+	face(-10)
+
+	for _ in range(4):
+    		forward(d)
+    		right(150)
+    		forward(d/3)
+    		left(100)
+    		forward(d/3)
+    		right(150)
+    		forward(d)
+    		left(110)
+
+	jump(0,0)        
+	show()
 	</code></pre>
 
 
