@@ -73,15 +73,17 @@
       
         <h2>2. Random Walk with Random Step Length</h2>
         <p>
-        	In a traditional random walk, the movement follows a fixed step length, which, while introducing directional randomness, still maintains a predictable pattern in terms of distance traveled per step. The modification enhances this by introducing a randomly varying step length, where each step is chosen from a range between min_step_length and max_step_length. This additional layer of randomness makes the motion more unpredictable and closely resembles real-world Brownian motion, where particle movements are influenced by varying external forces. By allowing the step size to change dynamically, the walk becomes more organic, avoiding the uniformity of a fixed-step approach and creating a more natural and realistic simulation of random movement.
-
-
-
-
-
-
-
-
+        	In a traditional random walk, the movement follows a fixed
+		step length, which, while introducing directional randomness,
+		still maintains a predictable pattern in terms of distance traveled per step.
+		The modification enhances this by introducing a randomly varying step
+		length, where each step is chosen from a range between min_step_length
+		and max_step_length. This additional layer of randomness makes the
+		motion more unpredictable and closely resembles real-world Brownian
+		motion, where particle movements are influenced by varying external
+		forces. By allowing the step size to change dynamically, the walk becomes
+		more organic, avoiding the uniformity of a fixed-step approach and
+		creating a more natural and realistic simulation of random movement.
 
         </p>
 
@@ -95,32 +97,33 @@
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<pre><code class="language-python">
 
-	# Initialize the turtle
-	initializeTurtle()
-	showturtle()
-	color('white')
-	bgcolor('red')
+	import random
 
-	# Move to a suitable starting position
-	jump(500, 300)  # Adjust these values as needed to center the square
-	face(15)  # Ensure the turtle is facing up
+	# Step 1: Initialize the turtle canvas
+	canvas_width = 1000
+	canvas_height = 800
+	initializeTurtle(initial_window_size=(canvas_width, canvas_height), mode='auto')
 
-	#Drawing a Malta Cross
-	d=100
-	jump(700, 300)
-	face(-10)
+	# Step 2: Function to perform a random walk (Brownian motion)
+	def random_walk(steps, min_step_length, max_step_length):
+    		speed(0)  # Set speed to maximum for faster drawing
+    		penup()
+    		jump(450, 450)  # Start near the middle of the canvas
+    		pendown()
 
-	for _ in range(4):
-    		forward(d)
-    		right(150)
-    		forward(d/3)
-    		left(100)
-    		forward(d/3)
-    		right(150)
-    		forward(d)
-    		left(110)
+    	for _ in range(steps):
+        	step_length = random.uniform(min_step_length, max_step_length)  # Random step length
+        	forward(step_length)  # Move forward by the random step length
+        	right(random.uniform(-180, 180))  # Turn by a random angle between -180 and 180 degrees
 
-	jump(0,0)        
+	# Step 3: Execute the random walk with increased steps and/or step length
+	steps = 1000
+	min_step_length = 5
+	max_step_length = 15
+
+	random_walk(steps, min_step_length, max_step_length)
+
+	# Step 4: Display the result
 	show()
 	</code></pre>
 
