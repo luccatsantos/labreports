@@ -165,13 +165,18 @@
 <section id="3">
       
       
-        <h2>3. Extending the Code: Fractal Spiral Malta Cross</h2>
+        <h2>3. Drawing the Cantor Set</h2>
         <p>
-        	I extended the original code to create a fractal spiral Malta Cross pattern. This was achieved by:
-		 1) Wrapping the original loop inside an additional loop to introduce fractal-like repetition;
-		 2) Adjusting the turtle’s position dynamically after each iteration;
-		 3) Reducing the segment length iteratively to create a shrinking effect;
-		 4) Introducing a termination condition to prevent infinite recursion.
+        	​The Cantor set, introduced by German mathematician Georg Cantor in 1883,
+		is a classic example of a fractal in mathematics.
+		It is constructed by repeatedly removing the middle third of a line segment.
+		This process leaves a set of points that is uncountably infinite yet
+		has zero measure, meaning its total length sums to zero. The Cantor set is
+		nowhere dense, containing no intervals, and is self-similar, as each part
+		resembles the whole. Cantor's work on this set was foundational in the
+		development of modern set theory and introduced concepts of different sizes
+		of infinity. ​
+
         </p>
 
 	</section>
@@ -184,53 +189,57 @@
 	<!-- -------------------------------------------------------------------------------------------- -->
 	<pre><code class="language-python">
 
-	# Initialize the turtle
-	initializeTurtle()
-	showturtle()
-	color('white')
-	bgcolor('red')
+# Define the cantor_set function
+def cantor_set(length, order):
+    if order == 0:
+        forward(length)
+    else:
+        cantor_set(length/3, order - 1)
+        penup()
+        forward(length/3)
+        pendown()
+        cantor_set(length/3,order-1)
 
-	# Move to a suitable starting position
-	jump(500, 300)  # Adjust these values as needed to center the square
-	face(15)  # Ensure the turtle is facing up
+initializeTurtle()
 
-	#Drawing a Malta Cross
+# Draw cantor_sets of different orders
+jump(50, 400)
+face(90)
+color('red')
+cantor_set(800, 1)  # Order 1
 
-	d=300
+jump(50, 350)
+face(90)
+color('blue')
+cantor_set(800, 2)  # Order 2
 
-	jump(700, 300)
-	face(-10)
-	
-	for _ in range(40):
-  	 for _ in range(4):
-   
-    	  forward(d)
-   	  right(150)
-   	  forward(d/3)
-  	  left(100)
-    	  forward(d/3)
-    	  right(150)
-    	  forward(d)
-    	  left(110)
-  
-  	jump(getx()*1.000001, gety()*1.000001)
-  	d=d-20
-  	right(5)
-  	if d <= 0:
-    	 break  # Exit the loop completely
-	jump(0,0)        
-	show()
+jump(50, 300)
+face(90)
+color('blue')
+cantor_set(800, 3)  # Order 3
+
+jump(50, 250)
+face(90)
+color('blue')
+cantor_set(800, 4)  # Order 4
+
+jump(50, 200)
+face(90)
+color('blue')
+cantor_set(800, 5)  # Order 5
+
+show()
 	</code></pre>
 
    	<p>
-	By iterating multiple times and shrinking the segment length, the result formed a fractal-like spiral pattern. The key observations include:
-	The fractal emerges naturally through self-replication at decreasing scales.
-	The small rotational offset (5°) adds a twisting effect, contributing to a spiral structure.
-        </p>
-	
-
-
-
+	This Python script uses the turtle graphics module to recursively
+	draw the Cantor set. The function takes two parameters: length, the length of the current segment,
+	and order, the recursion depth. At each recursion level, it draws the left third
+	of the segment, skips the middle third, and then draws the right third,
+	calling itself recursively to achieve the fractal pattern. The script initializes
+	the turtle and then draws Cantor sets of increasing orders (from 1 to 5 in this example),
+	each in a different color and at a different vertical position, to visualize the
+	fractal's progression.​</p>
       </section>
 
 
