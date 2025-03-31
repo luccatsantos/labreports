@@ -42,14 +42,13 @@
       <section id="introduction">
         <h2>Introduction</h2>
         <p>
-          In this lab, we plan to explore one of the most famous fractals in 
-          mathematics: the Mandelbrot set. Our goal is to implement a Python 
-          program to visualize the Mandelbrot set both in a broad view, covering 
-          its well-known cardioid shape and surrounding bulbs, and in a zoomed view, 
-          revealing the fractal's intricate boundaries. By studying this fractal, 
-          we aim to gain insights into how simple iterative maps can generate 
-          infinitely complex structures, and to appreciate how computational 
-          optimization (like JIT compilation) can facilitate deeper explorations.
+         This lab explores the generation of recursive fractals through algorithmic design,
+          beginning with randomized fractal trees and extending into geometric cross
+          structures. By modifying branching rules and introducing elements of randomness
+          or symmetry, we observe how simple recursive functions can produce highly complex
+          and varied patterns. The work draws from mathematical concepts of self-similarity
+          and natural variation to simulate both organic and geometric fractal forms.
+
         </p>
       </section>
 
@@ -164,33 +163,26 @@
           geometric structures, leading to the development of fractal crosses. By modifying the
           tree-generating code, I experimented with different branching rules, orientations, and
           recursive depths to produce distinct variations of fractal crosses. The first variation
-          maintains a simple and balanced structure, while the second increases complexity by introducing additional 
-          recursive subdivisions. The third applies a more distributed branching pattern, forming a 
+          maintains a simple and balanced structure. The second applies a more distributed branching pattern, forming a 
           highly intricate and symmetric cross, closely resembling the Vicsek fractal, a well-known 
           example of a box fractal (Weisstein, n.d.). These variations highlight the adaptability of 
           fractal algorithms and how slight modifications in recursion parameters can dramatically 
           alter geometric complexity.
-          <br>
+        </p>
+        <p>
           Below, there are two examples of these structures, with their respective code described in detai.
         </p>
 
         <h3>2.1. First Cross</h3>
          <p>
-      The original fractal tree function follows a deterministic pattern, reducing the branch 
-          length by a fixed amount (shorten_by) and maintaining a constant branching angle. 
-          This creates a symmetrical and predictable structure. I've made one modification 
-          to introduce randomness in both the branch length reduction and the branching angle.
-          By using random.uniform(), each iteration produces a slightly different 
-          tree shape, mimicking natural variations found in real trees. Additionally, 
-          I introduced a third branch at each recursive step, making the structure more 
-          complex and further enhancing its resemblance to natural fractal growth. This 
-          randomness makes the tree appear more organic and less rigidly structured. The 
-          modification aligns with Mandelbrot’s concept of fractional Brownian motion, 
-          where natural patterns exhibit self-similarity with an element of randomness, 
-          as seen in mountain ranges and coastlines (Mandelbrot, 1983). By integrating 
-          randomness, the new function better represents the stochastic nature of 
-          real-world fractal structures.
-
+      The code below uses Turtle graphics to produce a recursive fractal shaped like a cross.
+           The build_cross_3(length) function moves the turtle forward and backward while
+           turning at right angles, dividing each segment into smaller parts to build
+           a self-similar design. As recursion deepens, the turtle creates smaller branches
+           on each side, forming intricate sub-arms. The drawing begins at the lower center
+           of the screen, oriented upward, and is traced in red. The final output is a
+           symmetric figure where smaller crosses emerge from each arm,
+           demonstrating recursion through geometric repetition.
         </p>
 
 <!-- -------------------------------------------------------------------------------------------- -->
@@ -198,51 +190,45 @@
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
 <pre><code class="language-python">
-  # Define the random fractal tree function
-  def build_random_tree(branch_length):
-    if branch_length > 5:
+# Define the fractal cross function
+def build_cross_3(length):
+    if length > 1:
+        forward(length)
+        backward(length/3)
+        left(90)
+        build_cross_3(length/4)
+        right(90)
+        build_cross_3(length/3)
+        right(90)
+        build_cross_3(length/4)
+        right(90)
+        build_cross_3(2*length/3)
+        left(180)
+        backward(2*length/3)
 
-        forward(branch_length)
+# Initialize the turtle
+initializeTurtle(initial_window_size=(800, 800))
 
-        new_length = branch_length - random.uniform(branch_length/6, branch_length/3)
+# Set up the turtle's starting position and orientation
+jump(400, 750)  # Starting position at the bottom center of the canvas
+face(0)
+color('red')  # Set the pen color
 
-        angle = random.uniform(20,50)
-        
-        left(angle)
+# Draw the fractal tree
+build_cross_3(600)
 
-        build_random_tree(new_length)
+# Display the drawing
+show()
 
-        right(angle * 2)
-
-        build_random_tree(new_length)
-
-        left(angle)
-
-        backward(branch_length)
-
-  # Initialize the turtle
-  initializeTurtle(initial_window_size=(800, 800))
-
-  # Set up the turtle's starting position and orientation
-  jump(400, 600)  # Starting position at the bottom center of the canvas
-  face(0)
-  color('green')  # Set the pen color
-
-  # Draw the fractal tree
-  build_random_tree(100)
-
-  # Display the drawing
-  show()
 </code></pre>
 
         <p>
-      The two fractal trees in the figure below are generated using a randomized 
-          branching algorithm, illustrate the unpredictable nature of recursive growth 
-          with stochastic variations in branch length and angles. Each tree exhibits a 
-          unique yet self-similar structure, reflecting the natural complexity of organic 
-          forms. The added third branch increases the density, making the canopy appear 
-          fuller and more intricate. Due to the randomness in the code, no two trees are 
-          identical, reinforcing the concept of natural variability in fractal geometry.
+      The image below displays the result: a vertically oriented, cross-shaped fractal made of
+          nested, self-similar segments. Each main arm branches into smaller crosses,
+          repeating the same structure at reduced scales. This layered, recursive
+          construction centers around a vertical axis and grows in detail with each
+          level of depth. Rendered in red, the figure exemplifies fractal principles
+          through its balanced symmetry and recursive complexity.
         </p>
 
 
@@ -264,21 +250,15 @@
 
          <h3>2.2. Second Cross</h3>
          <p>
-      The original fractal tree function follows a deterministic pattern, reducing the branch 
-          length by a fixed amount (shorten_by) and maintaining a constant branching angle. 
-          This creates a symmetrical and predictable structure. I've made one modification 
-          to introduce randomness in both the branch length reduction and the branching angle.
-          By using random.uniform(), each iteration produces a slightly different 
-          tree shape, mimicking natural variations found in real trees. Additionally, 
-          I introduced a third branch at each recursive step, making the structure more 
-          complex and further enhancing its resemblance to natural fractal growth. This 
-          randomness makes the tree appear more organic and less rigidly structured. The 
-          modification aligns with Mandelbrot’s concept of fractional Brownian motion, 
-          where natural patterns exhibit self-similarity with an element of randomness, 
-          as seen in mountain ranges and coastlines (Mandelbrot, 1983). By integrating 
-          randomness, the new function better represents the stochastic nature of 
-          real-world fractal structures.
-
+ This second code defines and draws a recursive fractal known as the fourth-order cross
+           using Turtle graphics. The build_cross_4(length) function recursively divides
+           the input length by three and draws four branches, each rotated 90 degrees from
+           the last, creating a cross at each recursion level. The turtle moves
+           forward and backward for each arm, repositioning itself after drawing each segment.
+           The fractal is centered on the canvas, starting at coordinates (400, 400) with a
+           forward-facing orientation and red pen color. The recursive calls repeat until
+           the segment length drops below one, producing increasingly smaller sub-crosses
+           at each level of recursion.
         </p>
 
 <!-- -------------------------------------------------------------------------------------------- -->
@@ -286,51 +266,49 @@
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
 <pre><code class="language-python">
-  # Define the random fractal tree function
-  def build_random_tree(branch_length):
-    if branch_length > 5:
+# Define the fractal cross function
+def build_cross_4(length):
+    if length > 1:
+        build_cross_4(length/3)
+        forward(length)
+        build_cross_4(length/3)
+        backward(length)
+        right(90)
+        forward(length)
+        build_cross_4(length/3)
+        backward(length)
+        right(90)
+        forward(length)
+        build_cross_4(length/3)
+        backward(length)
+        right(90)
+        forward(length)
+        build_cross_4(length/3)
+        backward(length)
+        right(90)
 
-        forward(branch_length)
+# Initialize the turtle
+initializeTurtle(initial_window_size=(800, 800))
 
-        new_length = branch_length - random.uniform(branch_length/6, branch_length/3)
+# Set up the turtle's starting position and orientation
+jump(400, 400)  # Starting position at the bottom center of the canvas
+face(0)
+color('red')  # Set the pen color
 
-        angle = random.uniform(20,50)
-        
-        left(angle)
+# Draw the fractal tree
+build_cross_4(250)
 
-        build_random_tree(new_length)
-
-        right(angle * 2)
-
-        build_random_tree(new_length)
-
-        left(angle)
-
-        backward(branch_length)
-
-  # Initialize the turtle
-  initializeTurtle(initial_window_size=(800, 800))
-
-  # Set up the turtle's starting position and orientation
-  jump(400, 600)  # Starting position at the bottom center of the canvas
-  face(0)
-  color('green')  # Set the pen color
-
-  # Draw the fractal tree
-  build_random_tree(100)
-
-  # Display the drawing
-  show()
+# Display the drawing
+show()
 </code></pre>
 
         <p>
-      The two fractal trees in the figure below are generated using a randomized 
-          branching algorithm, illustrate the unpredictable nature of recursive growth 
-          with stochastic variations in branch length and angles. Each tree exhibits a 
-          unique yet self-similar structure, reflecting the natural complexity of organic 
-          forms. The added third branch increases the density, making the canopy appear 
-          fuller and more intricate. Due to the randomness in the code, no two trees are 
-          identical, reinforcing the concept of natural variability in fractal geometry.
+  The image shows the output of the build_cross_4 function, which forms a large central
+          cross with smaller cross patterns embedded at every branching point. Unlike
+          the previous vertically elongated fractal, this figure emphasizes symmetry across
+          both vertical and horizontal axes, creating a balanced and square-like structure.
+          Each arm replicates the same recursive cross pattern at a smaller scale, resulting
+          in dense, regular repetition throughout the figure.
         </p>
 
 
@@ -358,14 +336,12 @@
       <section id="conclusion">
         <h2>Conclusion</h2>
         <p>
-          In this lab, we leveraged a JIT-optimized code in Python to generate 
-          both a broad and a zoomed-in view of the Mandelbrot set. We observed 
-          the set’s hallmark “cardioid” shape at lower iteration counts 
-          and uncovered increasingly intricate structures as we zoomed in 
-          and raised the iteration limit. This exercise illustrates the 
-          interplay between iteration depth, resolution, and performance, 
-          and demonstrates how even a simple quadratic function in the complex 
-          plane can generate one of the most fascinating structures in mathematics.
+         The fractals generated in this lab demonstrate the power of recursion in modeling
+          both organic and geometric complexity. Small changes in code—such as adding
+          randomness or altering branch directions—can lead to vastly different visual
+          outcomes. These explorations reinforce the flexibility of fractal algorithms
+          and their relevance in representing natural and abstract structures alike.
+
         </p>
       </section>
 
@@ -385,12 +361,8 @@
             W. H. Freeman, 1982.
           </li>
           <li>
-            Peitgen, H.-O., Jürgens, H., &amp; Saupe, D. 
-            <em>Chaos and Fractals: New Frontiers of Science</em>. Springer, 1992.
-          </li>
-          <li>
-            Devaney, R. L. <em>A First Course in Chaotic Dynamical Systems</em>. 
-            Addison-Wesley, 1992.
+            Weisstein, E. W. (n.d.).  <em>Vicsek fractal.</em> 
+            From MathWorld—A Wolfram Web Resource. Retrieved from https://mathworld.wolfram.com/VicsekFractal.html
           </li>
         </ol>
       </section>
