@@ -42,13 +42,14 @@
       <section id="introduction">
         <h2>Introduction</h2>
         <p>
-         This lab explores the generation of recursive fractals through algorithmic design,
-          beginning with randomized fractal trees and extending into geometric cross
-          structures. By modifying branching rules and introducing elements of randomness
-          or symmetry, we observe how simple recursive functions can produce highly complex
-          and varied patterns. The work draws from mathematical concepts of self-similarity
-          and natural variation to simulate both organic and geometric fractal forms.
-
+         This lab explores the generative logic and visual expression of the Cantor Set 
+          through its original construction and two creative variations. First introduced 
+          by German mathematician Georg Cantor in 1883 as a counterexample in set theory 
+          (Dauben, 1990), the Cantor Set challenged traditional notions of continuity and laid 
+          the groundwork for modern fractal geometry. Beginning with the classical middle-third 
+          removal, this study then modifies the rule to preserve alternate segments and finally 
+          introduces randomness to disrupt symmetry—demonstrating how small changes in recursive 
+          logic can yield vastly different structural and visual outcomes.
         </p>
       </section>
 
@@ -60,21 +61,18 @@
       <section id="Random Fractal Tree">
         <h2>1. The Original Cantor Set</h2>
         <p>
-      The original fractal tree function follows a deterministic pattern, reducing the branch 
-          length by a fixed amount (shorten_by) and maintaining a constant branching angle. 
-          This creates a symmetrical and predictable structure. I've made one modification 
-          to introduce randomness in both the branch length reduction and the branching angle.
-          By using random.uniform(), each iteration produces a slightly different 
-          tree shape, mimicking natural variations found in real trees. Additionally, 
-          I introduced a third branch at each recursive step, making the structure more 
-          complex and further enhancing its resemblance to natural fractal growth. This 
-          randomness makes the tree appear more organic and less rigidly structured. The 
-          modification aligns with Mandelbrot’s concept of fractional Brownian motion, 
-          where natural patterns exhibit self-similarity with an element of randomness, 
-          as seen in mountain ranges and coastlines (Mandelbrot, 1983). By integrating 
-          randomness, the new function better represents the stochastic nature of 
-          real-world fractal structures.
-
+      The Python script below visualizes the Cantor Set through recursive geometric construction and 
+          plotting. It begins by importing NumPy and Matplotlib to handle numerical operations 
+          and graphical rendering. Initial parameters define the horizontal span, vertical 
+          positioning, bar height, spacing between levels, and recursion depth. The cantor_set 
+          function implements the fractal logic: at each level, it divides a line segment into 
+          three equal parts, removes the middle third, and recursively applies the same operation 
+          to the remaining left and right thirds, shifting them downward and reducing the recursion 
+          depth until reaching the base case. The output, a list of segments, is converted into a 
+          NumPy array for efficient plotting. Each segment is drawn as a black horizontal bar using 
+          fill_between, and the result is a stacked, self-similar structure representing the Cantor 
+          Set. The axes are hidden to emphasize the fractal pattern, and the plot is displayed in a 
+          clean format.
         </p>
 
 <!-- -------------------------------------------------------------------------------------------- -->
@@ -126,13 +124,11 @@ plt.show()
 </code></pre>
 
         <p>
-      The two fractal trees in the figure below are generated using a randomized 
-          branching algorithm, illustrate the unpredictable nature of recursive growth 
-          with stochastic variations in branch length and angles. Each tree exhibits a 
-          unique yet self-similar structure, reflecting the natural complexity of organic 
-          forms. The added third branch increases the density, making the canopy appear 
-          fuller and more intricate. Due to the randomness in the code, no two trees are 
-          identical, reinforcing the concept of natural variability in fractal geometry.
+    The image below depicts the original Cantor Set, constructed by recursively removing the
+          middle third of a horizontal segment at each level, resulting in a self-similar
+          fractal composed of increasingly fragmented line segments. This geometric process
+          visually embodies the foundational ideas of set theory and early 20th-century
+          explorations into the nature of the infinite and discontinuous (Dauben, 1990).
         </p>
 
 
@@ -164,30 +160,26 @@ plt.show()
       <section id="2. Variations">
         <h2>2. Variations &amp; Analysis</h2>
         <p>
-          Inspired by the fractal trees, I explored how similar recursive principles could be applied to 
-          geometric structures, leading to the development of fractal crosses. By modifying the
-          tree-generating code, I experimented with different branching rules, orientations, and
-          recursive depths to produce distinct variations of fractal crosses. The first variation
-          maintains a simple and balanced structure. The second applies a more distributed branching pattern, forming a 
-          highly intricate and symmetric cross, closely resembling the Vicsek fractal, a well-known 
-          example of a box fractal (Weisstein, n.d.). These variations highlight the adaptability of 
-          fractal algorithms and how slight modifications in recursion parameters can dramatically 
-          alter geometric complexity.
+          These two variations of the Cantor Set explore how altering deterministic rules can
+          produce distinct visual and structural outcomes in fractal generation. By modifying
+          the number of preserved segments or introducing randomness, each version highlights
+           different dimensions of complexity, symmetry, and visual rhythm within recursive 
+          systems.
         </p>
         <p>
-          Below, there are two examples of these structures, with their respective code described in detai.
+          Below, there are two variations of the Cantor Set, with their respective code described in some detail.
         </p>
 
         <h3>2.1. Fractal Tridents</h3>
          <p>
-      The code below uses Turtle graphics to produce a recursive fractal shaped like a cross.
-           The build_cross_3(length) function moves the turtle forward and backward while
-           turning at right angles, dividing each segment into smaller parts to build
-           a self-similar design. As recursion deepens, the turtle creates smaller branches
-           on each side, forming intricate sub-arms. The drawing begins at the lower center
-           of the screen, oriented upward, and is traced in red. The final output is a
-           symmetric figure where smaller crosses emerge from each arm,
-           demonstrating recursion through geometric repetition.
+      In this version of the code, the traditional Cantor Set construction is modified
+           by dividing each segment into five equal parts instead of three and removing
+           the second and fourth parts rather than the middle third. The recursive
+           function now preserves the 1st, 3rd, and 5th segments at each level, resulting
+           in a more complex and denser fractal pattern that retains three sub-bars per
+           iteration rather than two. Additionally, the total segment width (x_end) and
+           vertical spacing between levels have been adjusted to accommodate the new structure.
+
         </p>
 
 <!-- -------------------------------------------------------------------------------------------- -->
@@ -244,12 +236,11 @@ plt.show()
 </code></pre>
 
         <p>
-      The image below displays the result: a vertically oriented, cross-shaped fractal made of
-          nested, self-similar segments. Each main arm branches into smaller crosses,
-          repeating the same structure at reduced scales. This layered, recursive
-          construction centers around a vertical axis and grows in detail with each
-          level of depth. Rendered in red, the figure exemplifies fractal principles
-          through its balanced symmetry and recursive complexity.
+      The image depicts the visual outcome of the modified algorithm, with each bar
+          giving rise to a trio of narrower vertical bars in a cascading, top-down
+          arrangement. As recursion progresses, the figure takes on a dense, columnar
+          appearance reminiscent of tridents or stylized organ pipes, highlighting
+          the fractal’s increasing intricacy.
         </p>
 
 
@@ -271,15 +262,13 @@ plt.show()
 
          <h3>2.2. Random Cantor Sets</h3>
          <p>
- This second code defines and draws a recursive fractal known as the fourth-order cross
-           using Turtle graphics. The build_cross_4(length) function recursively divides
-           the input length by three and draws four branches, each rotated 90 degrees from
-           the last, creating a cross at each recursion level. The turtle moves
-           forward and backward for each arm, repositioning itself after drawing each segment.
-           The fractal is centered on the canvas, starting at coordinates (400, 400) with a
-           forward-facing orientation and red pen color. The recursive calls repeat until
-           the segment length drops below one, producing increasingly smaller sub-crosses
-           at each level of recursion.
+ This second variation of the code introduces randomness into the Cantor Set generation
+           process. Instead of consistently removing the same segments, each level divides
+           the bar into five equal parts and randomly removes two of them, preserving
+           three segments chosen at random. The recursive function then operates only
+           on the retained segments, resulting in structural variation at every depth.
+           This randomness introduces asymmetry and breaks the strict self-similarity of
+           the original set, generating a more organic and irregular fractal pattern.
         </p>
 
 <!-- -------------------------------------------------------------------------------------------- -->
@@ -336,12 +325,12 @@ plt.show()
 </code></pre>
 
         <p>
-  The image shows the output of the build_cross_4 function, which forms a large central
-          cross with smaller cross patterns embedded at every branching point. Unlike
-          the previous vertically elongated fractal, this figure emphasizes symmetry across
-          both vertical and horizontal axes, creating a balanced and square-like structure.
-          Each arm replicates the same recursive cross pattern at a smaller scale, resulting
-          in dense, regular repetition throughout the figure.
+  The image reflects the outcome of this randomized recursive logic. While the overall
+           form still suggests a fractal, the pattern lacks uniformity across horizontal 
+          positions and levels, with each column displaying distinct arrangements of bar 
+          widths and spacings. The resulting structure resembles a series of abstract 
+          barcodes or digital glyphs, emphasizing variation and unpredictability 
+          within a controlled recursive framework.
         </p>
 
 
@@ -369,12 +358,12 @@ plt.show()
       <section id="conclusion">
         <h2>Conclusion</h2>
         <p>
-         The fractals generated in this lab demonstrate the power of recursion in modeling
-          both organic and geometric complexity. Small changes in code—such as adding
-          randomness or altering branch directions—can lead to vastly different visual
-          outcomes. These explorations reinforce the flexibility of fractal algorithms
-          and their relevance in representing natural and abstract structures alike.
-
+         Through the original Cantor Set and its two variations, this lab demonstrates 
+          how recursive rules can generate rich and diverse fractal structures from 
+          simple principles. By adjusting the logic of segment removal—either deterministically 
+          or randomly—we observe shifts in symmetry, density, and visual rhythm. These 
+          explorations reveal the expressive potential of recursion in both mathematical 
+          theory and creative design.
         </p>
       </section>
 
@@ -390,12 +379,8 @@ plt.show()
         </p>
         <ol>
           <li>
-            Mandelbrot, B. <em>The Fractal Geometry of Nature</em>. 
-            W. H. Freeman, 1982.
-          </li>
-          <li>
-            Weisstein, E. W. (n.d.).  <em>Vicsek fractal.</em> 
-            From MathWorld—A Wolfram Web Resource. Retrieved from https://mathworld.wolfram.com/VicsekFractal.html
+            Dauben, J. W. (1990). <em>Georg Cantor: His mathematics and philosophy of the infinite.</em> 
+            Princeton University Press.
           </li>
         </ol>
       </section>
