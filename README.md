@@ -11,6 +11,8 @@ Lab 2: Drawing Fractal Curves: https://luccatsantos.github.io/labreports/Lab2-Fr
 
 Lab 3: Boxes and Sponge: https://luccatsantos.github.io/labreports/Lab3-BoxesAndSponge.html
 
+Lab 4: Random Trees and Fractal Crosses: https://luccatsantos.github.io/labreports/Lab4-RadomTreesAndFractalCrosses.html
+
 # Notes
 
 "Fractal geometry is not just a chapter of mathematics, but one that helps Everyman to see the same world differently." - Benoit Mandelbrot
