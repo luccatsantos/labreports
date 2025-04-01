@@ -80,47 +80,19 @@
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
 <pre><code class="language-python">
-# Import libraries for math and plotting
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Set initial parameters
-x_start = 0       # Starting x-coordinate of the first bar
-x_end = 3         # Ending x-coordinate of the first bar
-y_position = 0    # Starting y-coordinate (height of the first bar)
-bar_height = 5    # Height of each bar
-spacing = 10      # Space between bars (distance downwards)
-depth = 7         # Number of levels to draw
-
-# Define a function to create the Cantor Set pattern
-def cantor_set(x_start, x_end, y_position, depth):
-    if depth == 0:
-        return []
-
-    # Left and right segments for the current bar
-    left_segment = [[x_start, x_start + (x_end - x_start) / 3, y_position]]
-    right_segment = [[x_end - (x_end - x_start) / 3, x_end, y_position]]
-
-    # Recursively generate segments for the next levels
-    left_recursive = cantor_set(x_start, x_start + (x_end - x_start) / 3, y_position - spacing, depth - 1)
-    right_recursive = cantor_set(x_end - (x_end - x_start) / 3, x_end, y_position - spacing, depth - 1)
-
-    # Combine the current segments with the results from recursive calls
-    return left_segment + right_segment + left_recursive + right_recursive
-
-# Generate Cantor Set segments data
-segments = np.array(cantor_set(x_start, x_end, y_position, depth))  # Convert to an array for easy plotting
-
-# Plot the Cantor Set
-plt.figure(figsize=(25, 25))
-
-# Draw each segment as a black bar
-for x_start, x_end, y in segments:
-    plt.fill_between([x_start, x_end], [y] * 2, [y - bar_height] * 2, color="black")
-
-# Hide the axes for a clean look
-plt.axis('off')
-plt.show()
+cloudObj = 
+ CloudDeploy[
+  Manipulate[
+   Module[{size = 50, x, y, grid, z}, x = Subdivide[-1, 1, size - 1];
+    y = Subdivide[-1, 1, size - 1];
+    grid = Flatten[Outer[Complex, x, y], 1];
+    z = grid;
+    Do[z = z^2 - 0.5, {i, 1, iterations}];
+    ListPlot[ReIm /@ z, PlotStyle -> Blue, AspectRatio -> 1, 
+     PlotRange -> All, AxesLabel -> {"Re", "Im"}, 
+     PlotLabel -> 
+      Row[{"Fractal Grid after ", iterations, " iteration(s)"}], 
+     ImageSize -> Large]], {{iterations, 1, "Iterations"}, 0, 10, 1}]]
 </code></pre>
 
 <p>
