@@ -15,7 +15,7 @@ Lab 4: Random Trees and Fractal Crosses: https://luccatsantos.github.io/labrepor
 
 Lab 5: Cantor Set and Variations: https://luccatsantos.github.io/labreports/Lab5-CantorSets.html
 
-Lab 6: Grids and Gallaxies: 
+Lab 6: Grids and Gallaxies: https://luccatsantos.github.io/labreports/Lab6-Grids.html
 
 # Notes
 
