@@ -48,7 +48,7 @@
   Through iterative application of the transformation, we analyze how the values evolve with varying powers \( n \) and iteration 
   counts, visually represented through dynamic plotting of the real and imaginary parts. This approach offers a computational 
   perspective on fractal formation and complex dynamical systems. In this lab, I've opted to use Wolfram Mathematica because 
-  of its symbolic engine and dynamic interactivity—particularly through functions like <code></code>Manipulate</code>, which allow adjustment 
+  of its symbolic engine and dynamic interactivity—particularly through functions like <code>Manipulate</code>, which allow adjustment 
   of parameters in real time, making it exceptionally suited for mathematical experimentation and visualization. 
   Moreover, Mathematica handles complex arithmetic and large data visualizations efficiently, providing a
   visually rich representation of results. As Stephen Wolfram (2002) highlights in <em>A New Kind of Science</em>, simple 
@@ -65,18 +65,14 @@
       <section id="Random Fractal Tree">
         <h2>1. Animating with Wolfram Mathematica</h2>
         <p>
-      The Python script below visualizes the Cantor Set through recursive geometric construction and 
-          plotting. It begins by importing NumPy and Matplotlib to handle numerical operations 
-          and graphical rendering. Initial parameters define the horizontal span, vertical 
-          positioning, bar height, spacing between levels, and recursion depth. The cantor_set 
-          function implements the fractal logic: at each level, it divides a line segment into 
-          three equal parts, removes the middle third, and recursively applies the same operation 
-          to the remaining left and right thirds, shifting them downward and reducing the recursion 
-          depth until reaching the base case. The output, a list of segments, is converted into a 
-          NumPy array for efficient plotting. Each segment is drawn as a black horizontal bar using 
-          fill_between, and the result is a stacked, self-similar structure representing the Cantor 
-          Set. The axes are hidden to emphasize the fractal pattern, and the plot is displayed in a 
-          clean format.
+        The code below deploys an interactive visualization to the Wolfram Cloud, where a grid of complex numbers is iteratively
+          transformed and plotted based on a user-defined iteration count. The result is a dynamic display of evolving patterns in 
+          the complex plane. It uses several key functions: <code>CloudDeploy</code> publishes the content online, <code>Manipulate</code> 
+          enables real-time user interaction, and <code>Module</code> contains local variables to structure the computation.
+          <code>Subdivide</code> generates evenly spaced values to define the grid, <code>Outer[Complex, x, y]</code> builds complex 
+          coordinates, and <code>Flatten</code> reshapes the grid into a list. A <code>Do</code> loop applies the transformation
+          iteratively, and <code>ListPlot</code> renders the results, with labels and styling handled by <code>Row</code> and 
+          various plot options.
         </p>
 
 <!-- -------------------------------------------------------------------------------------------- -->
@@ -100,13 +96,14 @@ cloudObj =
 </code></pre>
 
 <p>
-    The image below depicts the original Cantor Set, constructed by recursively removing the
-          middle third of a horizontal segment at each level, resulting in a self-similar
-          fractal composed of increasingly fragmented line segments. This geometric process
-          visually embodies the foundational ideas of set theory and early 20th-century
-          explorations into the nature of the infinite and discontinuous (Dauben, 1990).
+    The plot below shows the result of interactively transforming a complex grid after one iteration, with the number of iterations 
+    controlled dynamically using the <code>Manipulate</code> interface. This built-in Wolfram Mathematica feature allows users to 
+    adjust parameters in real time and immediately observe the effects on the visual structure of the grid. The interface makes 
+    mexploration of complex behaviors both intuitive and efficient, enabling deeper insight into how iterative transformations distort 
+    mand evolve spatial patterns. Wolfram Mathematica is ideal for this task due to its native support for complex arithmetic, 
+    mefficient array operations, and built-in interactivity through <code>Manipulate</code>, making it easy to explore and share 
+    mathematical behavior visually and intuitively.
 </p>
-
 
 <iframe width='700' height='800' src='https://www.wolframcloud.com/obj/f830ccf2-8a7a-4b89-b984-089128f71bac' frameborder='0'></iframe>
 
@@ -124,12 +121,10 @@ cloudObj =
       <section id="2. Variations">
         <h2>2. Extending with a New Manipulation</h2>
         <p>
-          These two variations of the Cantor Set explore how altering deterministic rules can
-          produce distinct visual and structural outcomes in fractal generation. By modifying
-          the number of preserved segments or introducing randomness, each version highlights
-           different dimensions of complexity, symmetry, and visual rhythm within recursive 
-          systems. Below, there are two variations of the Cantor Set, with their 
-          respective code described in some detail.
+          This new version of the code introduces an additional control parameter, allowing users to vary not only the 
+          number of iterations but also the exponent applied in the transformation, enabling deeper exploration of how 
+          both iteration count and power affect the resulting complex grid pattern.
+
         </p>
 
 <!-- -------------------------------------------------------------------------------------------- -->
@@ -157,11 +152,11 @@ cloudObj2 =
 </code></pre>
 
         <p>
-      The image depicts the visual outcome of the modified algorithm, with each bar
-          giving rise to a trio of narrower vertical bars in a cascading, top-down
-          arrangement. As recursion progresses, the figure takes on a dense, columnar
-          appearance reminiscent of tridents or stylized organ pipes, highlighting
-          the fractal’s increasing intricacy.
+This plot, generated through the <code>Manipulate</code> interface, allows dynamic control over both the number of iterations and 
+          the exponent applied to the transformation. In this specific example, with one iteration and the exponent set to 3, the 
+          complex grid deforms into a four-lobed, petal-like shape centered around the origin. Compared to the smoother, diamond-like 
+          structure observed with an exponent of 2, this case illustrates how adjusting the exponent parameter introduces greater 
+          curvature and symmetry complexity.
         </p>
 
 
@@ -180,12 +175,9 @@ cloudObj2 =
       <section id="conclusion">
         <h2>Conclusion</h2>
         <p>
-         Through the original Cantor Set and its two variations, this lab demonstrates 
-          how recursive rules can generate rich and diverse fractal structures from 
-          simple principles. By adjusting the logic of segment removal—either deterministically 
-          or randomly—we observe shifts in symmetry, density, and visual rhythm. These 
-          explorations reveal the expressive potential of recursion in both mathematical 
-          theory and creative design.
+         This lab shows how varying iteration count and exponent affects the transformation of a complex grid. 
+          Using Wolfram Mathematica’s <code>Manipulate</code> and <code>CloudDeploy</code>, I've created an interactive tool to explore these 
+          changes in real time, highlighting the platform’s effectiveness for visualizing and sharing mathematical processes.
         </p>
       </section>
 
