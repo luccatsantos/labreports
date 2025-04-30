@@ -389,3 +389,65 @@ plt.show()
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mandelbrot & Julia Set Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #111;
+      color: white;
+    }
+    input {
+      padding: 10px;
+      font-size: 1em;
+      width: 300px;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    img {
+      max-width: 90%;
+      margin: 20px 0;
+      border: 2px solid white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mandelbrot & Julia Set Viewer</h1>
+  <p>Enter a complex number (e.g., <code>0.355+0.355j</code>):</p>
+  <input type="text" id="complexInput" placeholder="Enter complex number">
+  <button onclick="generateImages()">Generate</button>
+
+  <div id="images" style="display:none">
+    <h2>Mandelbrot Set</h2>
+    <img id="mandelbrotImg" src="" alt="Mandelbrot Set">
+    <h2>Julia Set</h2>
+    <img id="juliaImg" src="" alt="Julia Set">
+  </div>
+
+  <script>
+    function generateImages() {
+      const complex = document.getElementById('complexInput').value;
+      if (!complex) return alert("Please enter a complex number.");
+
+      const mandelbrotUrl = `/generate/mandelbrot?c=${encodeURIComponent(complex)}`;
+      const juliaUrl = `/generate/julia?c=${encodeURIComponent(complex)}`;
+
+      document.getElementById('mandelbrotImg').src = mandelbrotUrl;
+      document.getElementById('juliaImg').src = juliaUrl;
+      document.getElementById('images').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
+
