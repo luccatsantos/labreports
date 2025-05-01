@@ -70,10 +70,20 @@
 <h3>Enter a complex number:</h3>
 <input id="c" placeholder="e.g., 0.3+0.5j">
 <button onclick="generate()">Generate Plot</button>
+<span style="font-size: 0.9em; color: gray; margin-left: 10px;">
+  <em>Please allow up to 50 seconds for the server to respond due to backend latency inherent to free-tier infrastructure.</em>
+</span>
 
-<div id="results" style="display:none;">
+<div id="results" style="display:none; margin-top: 20px;">
   <img id="mandelbrot" src="">
 </div>
+
+<p style="margin-top: 20px;">
+  <strong>Can't see the plot?</strong> Try opening the application directly at:
+  <a href="https://mandelbrot-backend.onrender.com" target="_blank">
+    https://mandelbrot-backend.onrender.com
+  </a>
+</p>
 
 <script>
   const base = "https://mandelbrot-backend.onrender.com";
