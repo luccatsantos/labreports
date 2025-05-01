@@ -75,6 +75,23 @@
           clean format.
         </p>
 
+<h3>Enter a complex number:</h3>
+<input id="c" placeholder="e.g., 0.3+0.5j">
+<button onclick="generate()">Generate Plot</button>
+
+<div id="results" style="display:none;">
+  <img id="mandelbrot" src="">
+</div>
+
+<script>
+  const base = "https://mandelbrot-backend.onrender.com";
+
+  function generate() {
+    const c = encodeURIComponent(document.getElementById('c').value);
+    document.getElementById('mandelbrot').src = `${base}/mandelbrot?c=${c}`;
+    document.getElementById('results').style.display = 'block';
+  }
+</script>
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
