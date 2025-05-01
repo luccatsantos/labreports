@@ -65,15 +65,12 @@
       <section id="Chaos Game">
         <h2>1. Chaos Game</h2>
         <p>
-        The code below deploys an interactive visualization to the Wolfram Cloud, where a grid of complex numbers is iteratively
-          transformed and plotted based on a user-defined iteration count. The result is a dynamic display of evolving patterns in 
-          the complex plane. It uses several key functions: <code>CloudDeploy</code> publishes the content online, <code>Manipulate</code> 
-          enables real-time user interaction, and <code>Module</code> contains local variables to structure the computation.
-          <code>Subdivide</code> generates evenly spaced values to define the grid, <code>Outer[Complex, x, y]</code> builds complex 
-          coordinates, and <code>Flatten</code> reshapes the grid into a list. A <code>Do</code> loop applies the transformation
-          iteratively, and <code>ListPlot</code> renders the results, with labels and styling handled by <code>Row</code> and 
-          various plot options.
+          In this section, I start by documenting the original Chaos Game code I first ran in Google Colab. 
+  The code generates the Sierpinski Triangle by repeatedly moving a point halfway toward one of three triangle vertices chosen at random. 
+  After explaining the static version, I expand the code to create an animation that shows the fractal forming point by point, making the process more visual and intuitive.
+
         </p>
+
 
         <h3>1.1 Original Code Documented</h3>
         <p>
@@ -161,14 +158,11 @@ plt.show()
 
         <h3>1.2 Expanding the code</h3>
         <p>
-        The code below deploys an interactive visualization to the Wolfram Cloud, where a grid of complex numbers is iteratively
-          transformed and plotted based on a user-defined iteration count. The result is a dynamic display of evolving patterns in 
-          the complex plane. It uses several key functions: <code>CloudDeploy</code> publishes the content online, <code>Manipulate</code> 
-          enables real-time user interaction, and <code>Module</code> contains local variables to structure the computation.
-          <code>Subdivide</code> generates evenly spaced values to define the grid, <code>Outer[Complex, x, y]</code> builds complex 
-          coordinates, and <code>Flatten</code> reshapes the grid into a list. A <code>Do</code> loop applies the transformation
-          iteratively, and <code>ListPlot</code> renders the results, with labels and styling handled by <code>Row</code> and 
-          various plot options.
+    In the next code, I extend the basic Chaos Game implementation by turning it into an animated visualization of how the Sierpinski Triangle forms over time. 
+    Instead of plotting all the points at once like in the static version, I use <code>matplotlib.animation</code> to update the plot frame by frame. 
+    I start with a random point inside the canvas and, at each step, move it halfway toward one of the triangle’s three vertices chosen at random. 
+    By saving the animation as a GIF, I make the fractal-building process visible and intuitive. 
+    This lets me show how order gradually emerges from randomness, making it easier to grasp the recursive structure behind the Sierpinski Triangle. 
         </p>
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
@@ -225,13 +219,10 @@ ani.save("sierpinski2.gif", writer='pillow', fps=30)
 </code></pre>
         
 <p>
-    The plot below shows the result of interactively transforming a complex grid after one iteration, with the number of iterations 
-    controlled dynamically using the <code>Manipulate</code> interface. This built-in Wolfram Mathematica feature allows users to 
-    adjust parameters in real time and immediately observe the effects on the visual structure of the grid. The interface makes 
-    mexploration of complex behaviors both intuitive and efficient, enabling deeper insight into how iterative transformations distort 
-    mand evolve spatial patterns. Wolfram Mathematica is ideal for this task due to its native support for complex arithmetic, 
-    mefficient array operations, and built-in interactivity through <code>Manipulate</code>, making it easy to explore and share 
-    mathematical behavior visually and intuitively.
+  The GIF below shows the Sierpinski Triangle forming point by point through the Chaos Game, 
+  where each new point moves halfway toward a randomly chosen vertex of an equilateral triangle. 
+  This process reveals the fractal’s structure over time.
+
 </p>
 
   <!-- EXAMPLE FIGURE FOR BROAD VIEW -->
@@ -245,7 +236,7 @@ ani.save("sierpinski2.gif", writer='pillow', fps=30)
     loading="lazy"
   />
   <figcaption>
-    <strong>Chaos in Motion</strong> — 2,000 points forming a fractal.
+    <strong>Chaos in Motion:</strong>2,000 points forming a fractal.
   </figcaption>
 </figure>
 
