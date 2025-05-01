@@ -77,53 +77,60 @@
 
         <h3>1.1 Original Code Documented</h3>
         <p>
-        The code below deploys an interactive visualization to the Wolfram Cloud, where a grid of complex numbers is iteratively
-          transformed and plotted based on a user-defined iteration count. The result is a dynamic display of evolving patterns in 
-          the complex plane. It uses several key functions: <code>CloudDeploy</code> publishes the content online, <code>Manipulate</code> 
-          enables real-time user interaction, and <code>Module</code> contains local variables to structure the computation.
-          <code>Subdivide</code> generates evenly spaced values to define the grid, <code>Outer[Complex, x, y]</code> builds complex 
-          coordinates, and <code>Flatten</code> reshapes the grid into a list. A <code>Do</code> loop applies the transformation
-          iteratively, and <code>ListPlot</code> renders the results, with labels and styling handled by <code>Row</code> and 
-          various plot options.
+       This Python code generates the Sierpinski Triangle using the Chaos Game method. 
+          It starts with an equilateral triangle defined by three vertices and a random initial point. 
+          At each step, it randomly selects one of the triangle’s corners and moves halfway from the current point 
+          to that vertex, repeating this process 50,000 times. The resulting points are plotted using matplotlib, 
+          and over time they reveal the fractal structure of the Sierpinski Triangle.
         </p>
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
 <pre><code class="language-python">
-def hilbert_curve(step, parity, n):
-    "Draw a Hilbert curve of order n with given turtle, step size, and parity."
-    if n == 0:
-        return  # base case: no more recursion
-    left(90 * parity)
-    hilbert_curve(step, -parity, n - 1)      # Draw smaller curve with flipped parity
-    forward(step)
-    right(90 * parity)
-    hilbert_curve(step, parity, n - 1)       # Draw smaller curve with same parity
-    forward(step)
-    hilbert_curve(step, parity, n - 1)       # Draw another with same parity
-    right(90 * parity)     
-    forward(step)
-    hilbert_curve(step, -parity, n - 1)      # Draw smaller curve with flipped parity
-    left(90 * parity)
-    
-# Set up the variables
-n = 3
-step = 500 / (2 ** n)  # scale step so curve stays within bounds
+# Importing the requirements we need
+import matplotlib.pyplot as plt  # For drawing
+from random import random, randint  # To get random numbers
+import numpy as np  # For math (mainly square root here)
 
-initializeTurtle()
-showturtle()
+# This function just finds the point halfway between two others
+def midpoint(P, Q):
+    return (0.5 * (P[0] + Q[0]), 0.5 * (P[1] + Q[1]))
 
-# Set up the turtle
-face(90)
-jump(200, 550)
-color('red')
+# Here we define the 3 corners of an equilateral triangle
+# One at the bottom left, one at the bottom right, and one at the top center
+vertices = [(0, 0), (2, 2 * np.sqrt(3)), (4, 0)]
 
-# Draw the Hilbert Curve
+# We'll generate 50,000 points to form the triangle
+iterates = 50000
 
-hilbert_curve(step, 1, n)
+# These lists will hold the x and y coordinates of all the points
+x, y = [0] * iterates, [0] * iterates
 
-show()
+# Start with a random point somewhere on the canvas
+x[0], y[0] = random(), random()
+
+# Now we play the “chaos game”:
+# At each step, pick one of the triangle’s corners at random
+# and move halfway from the current point to that corner
+for i in range(1, iterates):
+    k = randint(0, 2)  # Pick a random corner (0, 1, or 2)
+    x[i], y[i] = midpoint(vertices[k], (x[i - 1], y[i - 1]))
+
+# Set up the plot
+plt.figure(figsize=(8, 8))  # Square plot
+
+# Plot all the points really small to get that fractal look
+plt.scatter(x, y, color='b', s=0.1)
+
+# Add a title so we know what we’re looking at
+plt.title('Sierpinski Triangle Generated Using the Chaos Game')
+
+# Make sure the triangle doesn’t get squished
+plt.axis('equal')
+
+# Show the final result!
+plt.show()
 </code></pre>
         
 <p>
@@ -140,13 +147,14 @@ show()
   <!-- -------------------------------------------------------------------------------------------- -->
         <figure>
           <img
-            alt="Hilbert Curves from n = 1 tp n = 6"
+            src="https://luccatsantos.github.io/images/sierpinskitriangle.png"
+            alt="Chaos Game Static"
             width="600"
-            height="400"
+            height="600"
             loading="lazy"
           />
           <figcaption>
-            <strong>Hilbert Curves:</strong> Variations from n = 1 to n = 6.
+            <strong>Sierpinski Triangle:</strong> Built from 50,000 random midpoints.
           </figcaption>
         </figure>
       </section>
@@ -167,39 +175,53 @@ show()
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
 <pre><code class="language-python">
-def hilbert_curve(step, parity, n):
-    "Draw a Hilbert curve of order n with given turtle, step size, and parity."
-    if n == 0:
-        return  # base case: no more recursion
-    left(90 * parity)
-    hilbert_curve(step, -parity, n - 1)      # Draw smaller curve with flipped parity
-    forward(step)
-    right(90 * parity)
-    hilbert_curve(step, parity, n - 1)       # Draw smaller curve with same parity
-    forward(step)
-    hilbert_curve(step, parity, n - 1)       # Draw another with same parity
-    right(90 * parity)     
-    forward(step)
-    hilbert_curve(step, -parity, n - 1)      # Draw smaller curve with flipped parity
-    left(90 * parity)
-    
-# Set up the variables
-n = 3
-step = 500 / (2 ** n)  # scale step so curve stays within bounds
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from random import random, randint
+import numpy as np
 
-initializeTurtle()
-showturtle()
+# Set up the 3 corners of our triangle
+vertices = [(0, 0), (2, 2 * np.sqrt(3)), (4, 0)]
 
-# Set up the turtle
-face(90)
-jump(200, 550)
-color('red')
+# How many points (aka frames) we want in the animation
+total_points = 2000
 
-# Draw the Hilbert Curve
+# Start with one random point somewhere on the screen
+current_point = [random(), random()]
 
-hilbert_curve(step, 1, n)
+# Set up the canvas for drawing
+fig, ax = plt.subplots(figsize=(4, 4), dpi=72)  # Smaller and lighter = faster to render
+scat = ax.scatter([], [], color='b', s=0.5)  # Set up an empty scatter plot
+ax.set_title("Animated Sierpinski Triangle")
+ax.set_xlim(0, 4)
+ax.set_ylim(0, 4)
+ax.set_aspect('equal')  # Keeps triangle from looking squished
 
-show()
+# We'll collect all the points here to show as the triangle builds
+points = []
+
+# This function runs once per frame to add a new point
+def update(frame):
+    global current_point
+    # Pick one of the triangle corners at random
+    chosen = vertices[randint(0, 2)]
+    # Move halfway toward that corner
+    current_point = [
+        0.5 * (current_point[0] + chosen[0]),
+        0.5 * (current_point[1] + chosen[1])
+    ]
+    # Save the new point and update the scatter plot
+    points.append(current_point[:])
+    scat.set_offsets(points)
+    return scat,
+
+# Put the animation together: run update() every frame
+ani = animation.FuncAnimation(
+    fig, update, frames=total_points, interval=1, blit=True, repeat=False
+)
+
+# Save it as a GIF so we can use it on websites, GitHub, etc.
+ani.save("sierpinski2.gif", writer='pillow', fps=30)
 </code></pre>
         
 <p>
@@ -216,13 +238,14 @@ show()
   <!-- -------------------------------------------------------------------------------------------- -->
         <figure>
           <img
-            alt="Hilbert Curves from n = 1 tp n = 6"
+            src="https://luccatsantos.github.io/images/images/sierpinski2.gif
+            alt="Chaos Game Animation"
             width="600"
-            height="400"
+            height="600"
             loading="lazy"
           />
           <figcaption>
-            <strong>Hilbert Curves:</strong> Variations from n = 1 to n = 6.
+            <strong>Chaos in Motion</strong> 2,000 points forming a fractal.
           </figcaption>
         </figure>
       </section>
