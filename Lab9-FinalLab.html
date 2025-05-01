@@ -233,88 +233,104 @@ ani.save("sierpinski2.gif", writer='pillow', fps=30)
       <section id="L-Systems">
         <h2>2. L-Systems</h2>
         <p>
-        The code below deploys an interactive visualization to the Wolfram Cloud, where a grid of complex numbers is iteratively
-          transformed and plotted based on a user-defined iteration count. The result is a dynamic display of evolving patterns in 
-          the complex plane. It uses several key functions: <code>CloudDeploy</code> publishes the content online, <code>Manipulate</code> 
-          enables real-time user interaction, and <code>Module</code> contains local variables to structure the computation.
-          <code>Subdivide</code> generates evenly spaced values to define the grid, <code>Outer[Complex, x, y]</code> builds complex 
-          coordinates, and <code>Flatten</code> reshapes the grid into a list. A <code>Do</code> loop applies the transformation
-          iteratively, and <code>ListPlot</code> renders the results, with labels and styling handled by <code>Row</code> and 
-          various plot options.
+     [INTRO HERE]
         </p>
 
         <h3>2.1 Original Code Documented</h3>
         <p>
-        The code below deploys an interactive visualization to the Wolfram Cloud, where a grid of complex numbers is iteratively
-          transformed and plotted based on a user-defined iteration count. The result is a dynamic display of evolving patterns in 
-          the complex plane. It uses several key functions: <code>CloudDeploy</code> publishes the content online, <code>Manipulate</code> 
-          enables real-time user interaction, and <code>Module</code> contains local variables to structure the computation.
-          <code>Subdivide</code> generates evenly spaced values to define the grid, <code>Outer[Complex, x, y]</code> builds complex 
-          coordinates, and <code>Flatten</code> reshapes the grid into a list. A <code>Do</code> loop applies the transformation
-          iteratively, and <code>ListPlot</code> renders the results, with labels and styling handled by <code>Row</code> and 
-          various plot options.
+        The box below contains the documented version of the fractal tree code, built using an L-system. 
+          The comments explain each part of the process, from generating the instruction string to 
+          drawing the tree structure with turtle graphics.
         </p>
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
 <pre><code class="language-python">
-def hilbert_curve(step, parity, n):
-    "Draw a Hilbert curve of order n with given turtle, step size, and parity."
-    if n == 0:
-        return  # base case: no more recursion
-    left(90 * parity)
-    hilbert_curve(step, -parity, n - 1)      # Draw smaller curve with flipped parity
-    forward(step)
-    right(90 * parity)
-    hilbert_curve(step, parity, n - 1)       # Draw smaller curve with same parity
-    forward(step)
-    hilbert_curve(step, parity, n - 1)       # Draw another with same parity
-    right(90 * parity)     
-    forward(step)
-    hilbert_curve(step, -parity, n - 1)      # Draw smaller curve with flipped parity
-    left(90 * parity)
-    
-# Set up the variables
-n = 3
-step = 500 / (2 ** n)  # scale step so curve stays within bounds
-
+# Get the turtle ready and make it visible
 initializeTurtle()
 showturtle()
 
-# Set up the turtle
-face(90)
-jump(200, 550)
-color('red')
+# This function checks if a character has a rule to follow;
+# if it does, it replaces it, otherwise it stays the same
+def apply_rule(char, rules):
+    return rules.get(char, char)
 
-# Draw the Hilbert Curve
+# This builds up the full L-system string by applying the rules repeatedly
+# Each iteration makes the structure more detailed
+def generate_lsystem(axiom, rules, iterations):
+    current_string = axiom
+    for _ in range(iterations):
+        current_string = ''.join([apply_rule(char, rules) for char in current_string])
+    return current_string
 
-hilbert_curve(step, 1, n)
+# This interprets the final string and turns it into turtle movements
+# 'F' means go forward, '+' and '-' are turns, and brackets manage position memory
+def draw_lsystem(turtle_string, length, angle):
+    stack = []
+    for command in turtle_string:
+        if command == 'F':
+            forward(length)
+        elif command == '+':
+            left(angle)
+        elif command == '-':
+            right(angle)
+        elif command == '[':
+            # Save current position and direction so it can come back later
+            position = (getx(), gety())
+            heading_angle = heading()
+            stack.append((position, heading_angle))
+        elif command == ']':
+            # Go back to the last saved position and direction
+            position, heading_angle = stack.pop()
+            jump(position[0], position[1])
+            face(heading_angle)
 
+# Set up the rule: every 'F' becomes a more complex branch
+rules = {'F': 'FF+[+F-F-F]-[-F+F+F]'}
+
+# Starting point of the system
+axiom = 'F'
+iterations = 4  # More iterations = more complexity
+
+# Build the instruction string using the rules
+turtle_string = generate_lsystem(axiom, rules, iterations)
+
+# Move turtle to a good starting point and set appearance
+jump(400, 500)
+face(0)
+color('green')
+
+# Set drawing settings
+length = 8     # Step length for each 'F'
+angle = 25     # Angle for turning at '+' and '-'
+
+# Draw the fractal tree based on the string
+draw_lsystem(turtle_string, length, angle)
+
+# Show the final drawing
 show()
+
 </code></pre>
         
 <p>
-    The plot below shows the result of interactively transforming a complex grid after one iteration, with the number of iterations 
-    controlled dynamically using the <code>Manipulate</code> interface. This built-in Wolfram Mathematica feature allows users to 
-    adjust parameters in real time and immediately observe the effects on the visual structure of the grid. The interface makes 
-    mexploration of complex behaviors both intuitive and efficient, enabling deeper insight into how iterative transformations distort 
-    mand evolve spatial patterns. Wolfram Mathematica is ideal for this task due to its native support for complex arithmetic, 
-    mefficient array operations, and built-in interactivity through <code>Manipulate</code>, making it easy to explore and share 
-    mathematical behavior visually and intuitively.
+    The image belows shows the fractal tree generated using an L-system. Each branch follows recursive rules that create increasingly detailed offshoots.
+  With over 11,000 points, the pattern mimics organic growth, and illustrates how simple symbolic rules can produce intricate biological forms.
+
 </p>
 
   <!-- EXAMPLE FIGURE FOR BROAD VIEW -->
   <!-- -------------------------------------------------------------------------------------------- -->
         <figure>
           <img
-            alt="Hilbert Curves from n = 1 tp n = 6"
+            src="images/LsystemTree.png"
+            alt="LSystem Tree"
             width="600"
-            height="400"
+            height="600"
             loading="lazy"
           />
           <figcaption>
-            <strong>Hilbert Curves:</strong> Variations from n = 1 to n = 6.
+            <strong>Fractal Tree:</strong> Generated with 11,119 points using an L-system.
           </figcaption>
         </figure>
       </section>
