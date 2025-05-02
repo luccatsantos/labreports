@@ -42,7 +42,15 @@
       <section id="introduction">
         <h2>Introduction</h2>
 <p>
-  [INTRO HERE]
+  This report explores the use of recursive algorithms and symbolic rewriting systems 
+  to generate complex geometric patterns known as fractals. 
+  Through three main sections—Chaos Game, L-systems, and Hilbert Curves—I document how 
+  simple mathematical rules and iteration can produce 
+  self-similar structures that resemble natural forms and fill space efficiently. 
+  Each part combines theoretical insight with hands-on 
+  implementation in Python, demonstrating the visual and conceptual beauty of fractal 
+  geometry as both a computational and artistic tool.
+
 </p>
       </section>
 
@@ -323,7 +331,7 @@ show()
   <!-- -------------------------------------------------------------------------------------------- -->
         <figure>
           <img
-            src="images/LsystemTree.png"
+            src="https://luccatsantos.github.io/labreports/images/LsystemTree.png"
             alt="LSystem Tree"
             width="600"
             height="600"
@@ -336,77 +344,126 @@ show()
       </section>
 
         <h3>2.2 Expanding the code</h3>
-        <p>
-        The code below deploys an interactive visualization to the Wolfram Cloud, where a grid of complex numbers is iteratively
-          transformed and plotted based on a user-defined iteration count. The result is a dynamic display of evolving patterns in 
-          the complex plane. It uses several key functions: <code>CloudDeploy</code> publishes the content online, <code>Manipulate</code> 
-          enables real-time user interaction, and <code>Module</code> contains local variables to structure the computation.
-          <code>Subdivide</code> generates evenly spaced values to define the grid, <code>Outer[Complex, x, y]</code> builds complex 
-          coordinates, and <code>Flatten</code> reshapes the grid into a list. A <code>Do</code> loop applies the transformation
-          iteratively, and <code>ListPlot</code> renders the results, with labels and styling handled by <code>Row</code> and 
-          various plot options.
-        </p>
+<p>
+  The original code implements a basic L-system fractal tree using a single deterministic rule,
+  replacing each forward movement (<code>F</code>) with a fixed branching pattern of turns and
+  lines, resulting in a symmetric and predictable structure. In contrast, the new code below 
+  introduces a far more intricate and biologically inspired L-system based on Paul Bourke’s 
+  <em>L-System Algae</em>, featuring a rich set of symbols and production rules that 
+  recursively generate branching patterns with varying directions and depths. 
+  While both use the same structural logic to generate and draw strings, the algae system 
+  relies on complex multi-symbol grammar and finer angles (12° instead of 25°), producing
+  a much more natural and organic visual result that mimics the irregularity of real plant 
+  growth.
+</p>
+
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
 <!-- -------------------------------------------------------------------------------------------- -->
 <pre><code class="language-python">
-def hilbert_curve(step, parity, n):
-    "Draw a Hilbert curve of order n with given turtle, step size, and parity."
-    if n == 0:
-        return  # base case: no more recursion
-    left(90 * parity)
-    hilbert_curve(step, -parity, n - 1)      # Draw smaller curve with flipped parity
-    forward(step)
-    right(90 * parity)
-    hilbert_curve(step, parity, n - 1)       # Draw smaller curve with same parity
-    forward(step)
-    hilbert_curve(step, parity, n - 1)       # Draw another with same parity
-    right(90 * parity)     
-    forward(step)
-    hilbert_curve(step, -parity, n - 1)      # Draw smaller curve with flipped parity
-    left(90 * parity)
-    
-# Set up the variables
-n = 3
-step = 500 / (2 ** n)  # scale step so curve stays within bounds
-
+# Initialize turtle
 initializeTurtle()
 showturtle()
 
-# Set up the turtle
-face(90)
-jump(200, 550)
-color('red')
+# Apply L-system rule
+def apply_rule(char, rules):
+    return rules.get(char, char)
 
-# Draw the Hilbert Curve
+# Generate L-system string
+def generate_lsystem(axiom, rules, iterations):
+    current = axiom
+    for _ in range(iterations):
+        next_seq = []
+        for char in current:
+            next_seq.append(apply_rule(char, rules))
+        current = ''.join(next_seq)
+    return current
 
-hilbert_curve(step, 1, n)
+# Draw with turtle
+def draw_lsystem(turtle_string, length, angle):
+    stack = []
+    for command in turtle_string:
+        if command in ('F', 'f'):
+            forward(length)
+        elif command == '+':
+            left(angle)
+        elif command == '-':
+            right(angle)
+        elif command == '[':
+            stack.append((getx(), gety(), heading()))
+        elif command == ']':
+            x, y, h = stack.pop()
+            jump(x, y)
+            face(h)
 
+# L-system algae rules (your corrected version)
+rules = {
+    'a': 'FFFFFv[+++h][---q]fb',
+    'b': 'FFFFFv[+++h][---q]fc',
+    'c': 'FFFFFv[+++fa]fd',
+    'd': 'FFFFFv[+++h][---q]fe',
+    'e': 'FFFFFv[+++h][---q]fg',
+    'g': 'FFFFFv[---fa]fa',
+    'h': 'ifFF',
+    'i': 'fFFF[--m]j',
+    'j': 'fFFF[--n]k',
+    'k': 'fFFF[--o]l',
+    'l': 'fFFF[--p]',
+    'm': 'fFn',
+    'n': 'fFo',
+    'o': 'fFp',
+    'p': 'fF',
+    'q': 'rfF',
+    'r': 'fFFF[++m]s',
+    's': 'fFFF[++n]t',
+    't': 'fFFF[++o]u',
+    'u': 'fFFF[++p]',
+    'v': 'Fv'
+}
+
+# Settings
+axiom = 'aF'
+iterations = 15
+angle = 12
+length = 2
+
+# Generate L-system string
+turtle_string = generate_lsystem(axiom, rules, iterations)
+
+# Set up turtle
+jump(400, 500)
+face(0)
+color('green')
+
+# Draw
+draw_lsystem(turtle_string, length, angle)
 show()
 </code></pre>
         
 <p>
-    The plot below shows the result of interactively transforming a complex grid after one iteration, with the number of iterations 
-    controlled dynamically using the <code>Manipulate</code> interface. This built-in Wolfram Mathematica feature allows users to 
-    adjust parameters in real time and immediately observe the effects on the visual structure of the grid. The interface makes 
-    mexploration of complex behaviors both intuitive and efficient, enabling deeper insight into how iterative transformations distort 
-    mand evolve spatial patterns. Wolfram Mathematica is ideal for this task due to its native support for complex arithmetic, 
-    mefficient array operations, and built-in interactivity through <code>Manipulate</code>, making it easy to explore and share 
-    mathematical behavior visually and intuitively.
+    The resulting image illustrates the execution of the algae L-system, showcasing
+  its intricate structure and organic appearance. Generated over 15 iterations with a 12° 
+  turning angle, the pattern emerges from the interaction of multiple symbols and branching
+  rules, creating a dense, fern-like figure. This output highlights the expressive power of
+  extended L-system grammars in modeling natural forms far beyond the simplicity of 
+  single-rule trees.
+</p>
+
 </p>
 
   <!-- EXAMPLE FIGURE FOR BROAD VIEW -->
   <!-- -------------------------------------------------------------------------------------------- -->
         <figure>
           <img
-            alt="Hilbert Curves from n = 1 tp n = 6"
+            src="https://luccatsantos.github.io/labreports/images/Lsystem-Algae.png"
+            alt="LSystemAlgae"
             width="600"
-            height="400"
+            height="600"
             loading="lazy"
           />
           <figcaption>
-            <strong>Hilbert Curves:</strong> Variations from n = 1 to n = 6.
+            <strong>L-System algae:</strong> Output from 15 iterations.
           </figcaption>
         </figure>
       </section>
@@ -605,6 +662,9 @@ show()
           The following reference was consulted during the preparation of this lab:
         </p>
         <ol>
+          <li>
+            Bourke, P. (n.d.). <em>Fractals</em>. Retrieved from <a href="https://paulbourke.net/fractals/">https://paulbourke.net/fractals/</a>
+          </li>
           <li>
             Lindenmayer, A. (1968). Mathematical models for cellular interactions in development I. Filaments with one-sided inputs. <em>Journal of Theoretical Biology, 18</em>(3), 280–299. <a href="https://doi.org/10.1016/0022-5193(68)90079-9" target="_blank">https://doi.org/10.1016/0022-5193(68)90079-9</a>
           </li>
